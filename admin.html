@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Goldwin Tourism</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>Booking Requests</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Submitted</th>
+      </tr>
+    </thead>
+    <tbody id="bookingsTableBody">
+      <!-- Booking data will appear here -->
+    </tbody>
+  </table>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvo5c0i7vAqPgzKahcUNBGaq1A-9Om9zk",
+      authDomain: "goldwin-booking.firebaseapp.com",
+      databaseURL: "https://goldwin-booking-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "goldwin-booking",
+      storageBucket: "goldwin-booking.appspot.com",
+      messagingSenderId: "437149644593",
+      appId: "1:437149644593:web:34508c8a4e96b325482210"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const bookingsRef = ref(db, "bookings");
+
+    const tbody = document.getElementById("bookingsTableBody");
+
+    onValue(bookingsRef, (snapshot) => {
+      tbody.innerHTML = ""; // clear existing data
+      snapshot.forEach(child => {
+        const booking = child.val();
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${booking.name}</td>
+          <td>${booking.email}</td>
+          <td>${booking.service}</td>
+          <td>${booking.date}</td>
+          <td>${new Date(booking.timestamp).toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+  </script>
+</body>
+</html>

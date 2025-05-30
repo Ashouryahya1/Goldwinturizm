@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Goldwin Tourism</title>
+  <link rel="stylesheet" href="css.css" />
+</head>
+<body>
+  <header>
+    <h1>Goldwin Tourism</h1>
+    <nav>
+      <a href="Services.html">Services</a>
+      <a href="#booking">Booking</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <h2>Explore Turkey with Comfort</h2>
+    <p>Hotels, Apartments, Car Rentals – All in One Place</p>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <ul>
+      <li>🏨 Hotel Booking</li>
+      <li>🏡 Cottage & Apartment Rentals</li>
+      <li>🚗 Car Rental Services</li>
+    </ul>
+  </section>
+
+  <section id="booking">
+    <h2>Book Now</h2>
+    <form id="bookingForm">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <select required>
+        <option value="">Choose a Service</option>
+        <option>Hotel</option>
+        <option>Apartment</option>
+        <option>Car Rental</option>
+      </select>
+      <input type="date" required />
+      <button type="submit">Send Booking Request</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Goldwin Tourism</p>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvo5c0i7vAqPgzKahcUNBGaq1A-9Om9zk",
+      authDomain: "goldwin-booking.firebaseapp.com",
+      databaseURL: "https://goldwin-booking-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "goldwin-booking",
+      storageBucket: "goldwin-booking.appspot.com",
+      messagingSenderId: "437149644593",
+      appId: "1:437149644593:web:34508c8a4e96b325482210"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("bookingForm");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = form.querySelector("input[type='text']").value;
+        const email = form.querySelector("input[type='email']").value;
+        const service = form.querySelector("select").value;
+        const date = form.querySelector("input[type='date']").value;
+
+        push(ref(db, "bookings"), {
+          name,
+          email,
+          service,
+          date,
+          timestamp: new Date().toISOString()
+        });
+
+        alert("Booking request sent successfully!");
+        form.reset();
+      });
+    });
+  </script>
+</body>
+</html>

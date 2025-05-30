@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Goldwin Tourism</title>
+  <link rel="stylesheet" href="css.css" />
+</head>
+<body>
+  <header>
+    <h1>Goldwin Tourism</h1>
+    <nav>
+      <div class="language-selector">
+        <select id="language-switcher">
+          <option value="en">English</option>
+          <option value="tr">Türkçe</option>
+          <option value="ar">العربية</option>
+        </select>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hero">
+   <div class="overlay"></div>
+     <div class="hero-content">
+      <h2 data-en="Explore Turkey with Confidence" data-ar="استكشف تركيا بثقة" data-tr="Türkiye'yi Güvenle Keşfedin">Explore Turkey with Confidence</h2>
+      <p data-en="Accommodation, Transportation, Real Estate — All in One Place"
+       data-ar="الإقامة، النقل، العقارات — كل شيء في مكان واحد"
+       data-tr="Konaklama, Ulaşım, Emlak — Hepsi Tek Yerde">
+       Accommodation, Transportation, Real Estate — All in One Place
+      </p>
+     </div>
+  </section>
+
+  <section id="about">
+    <div class="overlay"></div>
+  <div class="about-content">
+    <h2 data-en="Who We Are" data-ar="من نحن" data-tr="Biz Kimiz">Who We Are</h2>
+    <p data-en="Goldwin Tourism is your trusted partner in Trabzon for high-quality travel and real estate services."
+       data-ar="جولد وين للسياحة هي شريكك الموثوق في طرابزون للخدمات السياحية والعقارية عالية الجودة."
+       data-tr="Goldwin Tourism, Trabzon'da kaliteli turizm ve emlak hizmetlerinde güvenilir ortağınızdır.">
+       Goldwin Tourism is your trusted partner in Trabzon for high-quality travel and real estate services.
+    </p>
+  </div>
+  </section>
+
+  <section id="services" >
+    <h2 data-en="Our Services" data-ar="خدماتنا" data-tr="Hizmetlerimiz">Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="Hotel.jpg" alt="Hotel Booking">
+        <h3 data-en="Hotel & Apartment Booking" data-ar="حجز فنادق وشقق" data-tr="Otel & Daire Rezervasyonu">Hotel Booking</h3>
+      </div>
+      <div class="service-card">
+        <img src="bungalov.jpg" alt="Cottages & Apartments">
+        <h3 data-en="Cottage Rentals" data-ar="تأجير الأكواخ" data-tr="Dağ Evi Kiralama">Cottages & Apartments</h3>
+      </div>
+      <div class="service-card">
+        <img src="araba.jpg" alt="Car Rentals">
+        <h3 data-en="Car Rental Services" data-ar="تأجير سيارات" data-tr="Araç Kiralama">Car Rentals</h3>
+      </div>
+      <div class="service-card">
+        <img src="transfer.jpeg" alt="City Tours">
+        <h3 data-en="Airport Pickup & Drop" data-ar="استقبال وتوديع من المطار" data-tr="Havaalanı Karşılama ve Uğurlama">City Tours</h3>
+      </div>
+      <div class="service-card">
+        <img src="Emlak.jpeg" alt="Real Estate">
+        <h3 data-en="Real Estate Assistance" data-ar="مساعدة عقارية" data-tr="Emlak Danışmanlığı">Real Estate Services</h3>
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact" class="social-buttons">
+    <h2 data-en="Contact Us" data-ar="تواصل معنا" data-tr="İletişim">Contact Us</h2>
+    <p>
+       <a href="https://www.facebook.com/profile.php?id=61576865998290"target="_blank" > Facebook</a>
+       <a href="https://instagram.com/YOUR_PROFILE"target="_blank">Instagram</a>
+       <a href="https://wa.me/905013267061" target="_blank">WhatsApp</a> 
+      </p>
+  </section>
+<!--
+  <section id="booking">
+    <h2>Get in Touch</h2>
+    <form id="bookingForm">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="text" placeholder="Enter you Message">
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+-->
+
+  <footer>
+    <p>&copy; 2025 Goldwin Tourism</p>
+  </footer>
+
+  <script>
+    const switcher = document.getElementById("language-switcher");
+    switcher.addEventListener("change", () => {
+      const lang = switcher.value;
+      document.querySelectorAll("[data-en]").forEach(el => {
+        el.textContent = el.dataset[lang];
+      });
+    });
+  </script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvo5c0i7vAqPgzKahcUNBGaq1A-9Om9zk",
+      authDomain: "goldwin-booking.firebaseapp.com",
+      databaseURL: "https://goldwin-booking-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "goldwin-booking",
+      storageBucket: "goldwin-booking.appspot.com",
+      messagingSenderId: "437149644593",
+      appId: "1:437149644593:web:34508c8a4e96b325482210"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("bookingForm");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = form.querySelector("input[type='text']").value;
+        const email = form.querySelector("input[type='email']").value;
+        const service = form.querySelector("select").value;
+        const date = form.querySelector("input[type='date']").value;
+
+        push(ref(db, "bookings"), {
+          name,
+          email,
+          service,
+          date,
+          timestamp: new Date().toISOString()
+        });
+
+        alert("Booking request sent successfully!");
+        form.reset();
+      });
+    });
+  </script>
+</body>
+</html>
