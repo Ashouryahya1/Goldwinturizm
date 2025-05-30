@@ -197,10 +197,11 @@ body {
   }
   .social-buttons {
     display: flex;
-    gap: 15px;
+    gap: 20px;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
   }
   
   .social-buttons a {
@@ -217,6 +218,18 @@ body {
     background: goldenrod;
     color: black;
   }
+
+  /* شاشات صغيرة – الموبايل */
+@media (max-width: 600px) {
+  .social-buttons {
+    flex-direction: column;
+  }
+
+  .social-buttons a {
+    width: 100%; /* ياخدوا عرض العنصر */
+    max-width: 250px;
+  }
+}
   
   .language-selector {
     margin-top: 20px;
